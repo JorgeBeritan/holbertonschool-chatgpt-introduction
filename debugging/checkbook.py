@@ -20,9 +20,13 @@ class Checkbook:
             amount (float): La cantidad a depositar.
 
         """
+        if amount <= 0:
+            print("Amount must be a positive number.")
+            return
+
         self.balance += amount
         print("Deposited ${:.2f}".format(amount))
-        print("Current Balance: ${:.2f}".format(self.balance))
+        self._print_balance()
 
     def withdraw(self, amount):
         """
@@ -32,16 +36,20 @@ class Checkbook:
             amount (float): La cantidad a retirar.
 
         """
+        if amount <= 0:
+            print("Amount must be a positive number.")
+            return
+
         if amount > self.balance:
             print("Insufficient funds to complete the withdrawal.")
         else:
             self.balance -= amount
             print("Withdrew ${:.2f}".format(amount))
-            print("Current Balance: ${:.2f}".format(self.balance))
+            self._print_balance()
 
-    def get_balance(self):
+    def _print_balance(self):
         """
-        Obtiene y muestra el saldo actual de la libreta de cheques.
+        Imprime el saldo actual de la libreta de cheques.
         """
         print("Current Balance: ${:.2f}".format(self.balance))
 
@@ -55,13 +63,19 @@ def main():
         if action.lower() == 'exit':
             break
         elif action.lower() == 'deposit':
-            amount = float(input("Enter the amount to deposit: $"))
-            cb.deposit(amount)
+            try:
+                amount = float(input("Enter the amount to deposit: $"))
+                cb.deposit(amount)
+            except ValueError:
+                print("Invalid amount. Please enter a valid number.")
         elif action.lower() == 'withdraw':
-            amount = float(input("Enter the amount to withdraw: $"))
-            cb.withdraw(amount)
+            try:
+                amount = float(input("Enter the amount to withdraw: $"))
+                cb.withdraw(amount)
+            except ValueError:
+                print("Invalid amount. Please enter a valid number.")
         elif action.lower() == 'balance':
-            cb.get_balance()
+            cb._print_balance()
         else:
             print("Invalid command. Please try again.")
 
