@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import sys
 
-# Itera sobre los argumentos pasados al script
-for i, arg in enumerate(sys.argv):
-    print("{}".format(arg))
+for i in range(1, len(sys.argv)):
+    print(sys.argv[i])
